@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Submission Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+            background-image: url(back.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Poppins';
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            display: flex; /* Enable Flexbox */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Full width for responsiveness */
+        }
+        .card {
+            max-width: 600px; /* Increase the max width */
+            width: 100%; /* Full width for responsiveness */
+            padding: 2rem; /* Add padding inside the card */
+        }
+        .card-header {
+            font-size: 1.5rem; /* Bigger header text */
+        }
+        .form-label {
+            font-size: 1.1rem; /* Larger label font */
+        }
+        .form-control {
+            font-size: 1rem; /* Larger input font */
+        }
+        .btn-success {
+            font-size: 1.1rem; /* Larger button font */
+            padding: 0.75rem; /* Increased button padding */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12"> 
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white text-center">
+                        <h3 class="mb-0">Homework Submission Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="homeworkForm" novalidate>
+                            <div class="mb-3">
+                                <label for="studentName" class="form-label">Student Name</label>
+                                <input type="text" class="form-control" id="studentName" placeholder="Enter your name" required>
+                                <div class="invalid-feedback">
+                                    Please enter your name.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="assignmentTitle" class="form-label">Assignment Title</label>
+                                <input type="text" class="form-control" id="assignmentTitle" placeholder="Enter assignment title" required>
+                                <div class="invalid-feedback">
+                                    Please enter the assignment title.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileUpload" class="form-label">File Upload</label>
+                                <input type="file" class="form-control" id="fileUpload" required accept=".pdf,.doc,.docx">
+                                <div class="invalid-feedback">
+                                    Please upload a valid file (.pdf, .doc, .docx).
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('homeworkForm').addEventListener('submit', function (e) {
+            const studentName = document.getElementById('studentName');
+            const assignmentTitle = document.getElementById('assignmentTitle');
+            const fileUpload = document.getElementById('fileUpload');
+
+            // Check for valid input
+            if (studentName.value.trim() === '' || assignmentTitle.value.trim() === '' || fileUpload.files.length === 0) {
+                e.preventDefault();
+
+                if (studentName.value.trim() === '') {
+                    studentName.classList.add('is-invalid');
+                } else {
+                    studentName.classList.remove('is-invalid');
+                }
+
+                if (assignmentTitle.value.trim() === '') {
+                    assignmentTitle.classList.add('is-invalid');
+                } else {
+                    assignmentTitle.classList.remove('is-invalid');
+                }
+
+                if (fileUpload.files.length === 0 || !/\.(pdf|doc|docx)$/i.test(fileUpload.files[0].name)) {
+                    fileUpload.classList.add('is-invalid');
+                } else {
+                    fileUpload.classList.remove('is-invalid');
+                }
+            } else {
+                // If all inputs are valid, show a prompt
+                alert(`Thank you, ${studentName.value}! Your homework titled "${assignmentTitle.value}" has been submitted successfully.`);
+                // Optionally, reset the form
+                e.preventDefault(); // Prevent the actual form submission for demo purposes
+                document.getElementById('homeworkForm').reset(); // Uncomment this line if you want to reset the form
+            }
+        });
+
+        // Prevent space bar from submitting when no input
+        document.addEventListener('keydown', function (e) {
+            if (e.code === 'Space' && !document.activeElement.value.trim()) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
